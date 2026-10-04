@@ -10,7 +10,6 @@ from azure_agent_harness.llmops.observability import configure_observability
 from azure_agent_harness.runtime.factory import build_agent
 from azure_agent_harness.tools.example import create_demo_ticket, get_service_status
 
-
 INSTRUCTIONS = Path(__file__).with_name("instructions.md").read_text()
 
 

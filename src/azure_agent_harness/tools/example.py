@@ -19,7 +19,9 @@ def get_service_status(
 
 @harness_tool(
     name="create_demo_ticket",
-    description="Create a demo support ticket. This illustrates an external write requiring approval.",
+    description=(
+        "Create a demo support ticket. This illustrates an external write requiring approval."
+    ),
     risk=ToolRisk.WRITE,
     approval_mode="always_require",
 )

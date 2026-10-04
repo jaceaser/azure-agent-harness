@@ -4,7 +4,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 AGENTS = ROOT / "src" / "azure_agent_harness" / "agents"
 
@@ -24,7 +23,8 @@ def main() -> None:
     target.mkdir(parents=True)
     (target / "__init__.py").write_text("")
     (target / "instructions.md").write_text(
-        f"You are the {raw.replace('_', ' ')} agent.\\n\\nDefine responsibilities and boundaries here.\\n"
+        f"You are the {raw.replace('_', ' ')} agent.\\n\\n"
+        "Define responsibilities and boundaries here.\\n"
     )
     (target / "main.py").write_text(
         "from pathlib import Path\\n\\n"

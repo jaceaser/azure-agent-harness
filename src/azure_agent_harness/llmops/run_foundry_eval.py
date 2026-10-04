@@ -12,7 +12,6 @@ from azure_agent_harness.agents.example.main import INSTRUCTIONS
 from azure_agent_harness.runtime.factory import build_agent
 from azure_agent_harness.tools.example import get_service_status
 
-
 DATASET = Path(__file__).resolve().parents[3] / "llmops" / "datasets" / "cloud_smoke.jsonl"
 
 
