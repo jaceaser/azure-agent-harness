@@ -29,6 +29,7 @@ def build_agent(
     name: str,
     instructions: str,
     tools: Sequence[Any] | None = None,
+    middleware: Sequence[Any] | None = None,
     settings: Settings | None = None,
 ) -> Agent:
     """Build a Microsoft Agent Framework agent backed by a Foundry project model."""
@@ -46,6 +47,7 @@ def build_agent(
         name=name,
         instructions=instructions,
         tools=list(tools or []),
+        middleware=list(middleware or []),
         # Let the selected host/session strategy own conversation persistence.
         default_options={"store": False},
     )

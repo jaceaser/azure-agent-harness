@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import inspect
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum
-from typing import Any, Callable
+from functools import wraps
+from typing import Any
 
 from agent_framework import tool
 
@@ -51,10 +54,32 @@ def harness_tool(
             approval_mode=approval_mode,
             description=description,
         )
+
+        if inspect.iscoroutinefunction(fn):
+
+            @wraps(fn)
+            async def async_wrapper(*args: Any, **kwargs: Any) -> Any:
+                from azure_agent_harness.auth import authorize_tool_call
+
+                authorize_tool_call(name)
+                return await fn(*args, **kwargs)
+
+            wrapped = async_wrapper
+        else:
+
+            @wraps(fn)
+            def sync_wrapper(*args: Any, **kwargs: Any) -> Any:
+                from azure_agent_harness.auth import authorize_tool_call
+
+                authorize_tool_call(name)
+                return fn(*args, **kwargs)
+
+            wrapped = sync_wrapper
+
         return tool(
             name=name,
             description=description,
             approval_mode=approval_mode,
-        )(fn)
+        )(wrapped)
 
     return decorator

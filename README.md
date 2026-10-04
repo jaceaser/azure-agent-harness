@@ -137,6 +137,17 @@ deterministic action
 
 Do not introduce a hybrid split unless it simplifies a real operational requirement.
 
+## Authentication
+
+The Foundry Responses host and the Azure Functions/Durable starter support inbound Entra ID authentication when `AUTH_MODE=entra`.
+Bearer tokens are validated for tenant, issuer, audience, lifetime and RS256 signature before the request reaches the agent runtime.
+Validated callers become request-scoped principals, and every `@harness_tool` call checks the required permission for the tool risk level.
+For the Functions host, the validated principal is serialized into durable run options and rehydrated inside the entity before tool authorization.
+Permissions are flat: `Tools.Write` does not imply `Tools.Read`, and `Tools.Destructive` does not imply lower-risk access.
+For local development, `AUTH_MODE=disabled` runs tools without a principal.
+For production, startup validation requires Entra auth configuration.
+See [docs/AUTH.md](docs/AUTH.md) for app registration, environment variables, role mapping and host-specific behavior.
+
 ## Enterprise-grade principles
 
 This project uses the term **enterprise-grade** to describe architectural expectations, not a compliance certification. The starter is designed around these principles:
@@ -160,6 +171,7 @@ This project uses the term **enterprise-grade** to describe architectural expect
 azure-agent-harness/
 ├── src/azure_agent_harness/
 │   ├── agents/             # thin agent definitions
+│   ├── auth/               # inbound Entra auth + principal context
 │   ├── runtime/            # Agent Framework construction/runtime
 │   ├── tools/              # tool registry + examples
 │   ├── policies/           # deterministic authorization/risk rules

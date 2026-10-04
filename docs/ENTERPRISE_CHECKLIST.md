@@ -4,7 +4,9 @@ This checklist is intentionally stricter than the minimal starter.
 
 ## Identity and access
 - [ ] Production uses Managed Identity or explicit workload identity.
+- [ ] Foundry Responses host uses inbound Entra ID authentication in production.
 - [ ] RBAC is least privilege per agent/workload.
+- [ ] Tool-level authorization maps Entra roles/scopes to each tool risk level.
 - [ ] Human administration is separated from runtime identities.
 - [ ] External SaaS credentials are scoped and rotated.
 
